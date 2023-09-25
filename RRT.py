@@ -1,11 +1,11 @@
 import numpy as np
-from utils import kNN, Tree, Node, StateSpace, Obstacle
-from utils import rrt_mode as mode
+from utils.utils import kNN, Tree, Node, StateSpace, Obstacle
+from utils.utils import rrt_mode as mode
 import matplotlib.pyplot as plt
 from time import sleep, time
 
 class RRT:
-  def __init__(self, stateSpace, mode=mode.rrt, K=10, stepSize=0.1, maxStepSize=None, maxIter=1000, tol=0.2):
+  def __init__(self, stateSpace, mode=mode.rrt, K=10, stepSize=0.3, maxStepSize=None, maxIter=1000, tol=0.2):
     if maxStepSize is None:
       maxStepSize=2*stepSize
       
@@ -71,7 +71,6 @@ class RRT:
         break
 
       
-
     self._iter = i+1
 
     # Add desired position as final node
@@ -114,7 +113,7 @@ class RRT:
 
     return False, None
 
-  def show_path(self, show_tree=True, demo=False, speed=1):
+  def show_path(self, demo=False, speed=1):
     dim = self._tree.dim
     N = len(self._tree.path)
     X = np.zeros((dim, N))
@@ -190,6 +189,6 @@ if __name__=="__main__":
   ss = StateSpace(stateRange=np.array([[-2, -2], [2, 2]]), obs=[obs1, obs2, obs3, obs4])
   path_planner = RRT(ss, mode=mode.rrt_star, K=10, tol=0.15)
   path_planner.search_path(x0, xd)
-  path_planner.show_path(show_tree=True, demo=True, speed=10)
+  path_planner.show_path(demo=True, speed=10)
   
   
